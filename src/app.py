@@ -30,13 +30,37 @@ def handle_hello():
 
     # this is how you can use the Family datastructure by calling its methods
     members = jackson_family.get_all_members()
-    response_body = {
-        "hello": "world",
-        "family": members
-    }
+    return jsonify(members), 200
+
+@app.route('/member/<int:id>', methods=['GET'])
+def one_member(id):
+    member = jackson_family.get_member(id)
+    return jsonify({"done":member}),200
 
 
-    return jsonify(response_body), 200
+@app.route('/member', methods=['POST'])
+def create_member():
+    member=request.get_json()
+    first_name = request.json.get("first_name")
+    age = request.json.get("age")
+    """ if first_name == "":return jsonify({"msg":"debes ingresar tu nombre"}),400
+    if age == null:return jsonify({"msg":"debes ingresar tu edad"}),400 """
+    add_to_list = jackson_family.add_member(member)
+    return jsonify({"msg":"El registro fue exitoso"}),200
+
+@app.route('/member/<int:id>', methods=['DELETE'])
+def delete_member(id):
+    member = jackson_family.delete_member(id)
+    return jsonify({"done":"eliminado"}),200
+
+@app.route('/update_member/<int:id>', methods=['PUT'])
+def update_member(id):
+    member = request.get_json()
+    """ if first_name == "":return jsonify({"msg":"debes ingresar tu nombre"}),400
+    if age == null:return jsonify({"msg":"debes ingresar tu edad"}),400 """
+    new_member = jackson_family.update_member(id,member)
+    return jsonify(new_member,{"msg":"usuario actualizado"}),200
+
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
