@@ -18,8 +18,8 @@ class FamilyStructure:
         # example list of members
         self._members = [
             {
-            "id":self._generateId(),
-            "first_name": "John",
+            "id":3443,
+            "first_name": "Tommy",
             "last_name": self.last_name,
             "age": 33,
             "lucky_numbers": [7, 13, 22]
@@ -47,6 +47,7 @@ class FamilyStructure:
     def add_member(self, member):
         # fill this method and update the return
         member["id"]=self._generateId()
+        member["last_name"]=self.last_name
         return self._members.append(member)
         
 
@@ -59,8 +60,7 @@ class FamilyStructure:
 
     def get_member(self, id):
         member = list(filter(lambda one : one["id"] == id, self._members))
-        print(member)
-        return member
+        return member[0]
         # fill this method and update the return
         
 
